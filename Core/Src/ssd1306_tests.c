@@ -253,6 +253,28 @@ void ssd1306_TestFonts1() {
     ssd1306_UpdateScreen();
 }
 
+void ssd1306_DisplayAnalogValue(int value) {
+    uint8_t y = 0;
+    ssd1306_Fill(Black);
+
+    #ifdef SSD1306_INCLUDE_FONT_11x18
+    ssd1306_SetCursor(2, y);
+    ssd1306_WriteString("MENU", Font_11x18, White);
+    y += 26;
+    #endif
+
+    #ifdef SSD1306_INCLUDE_FONT_7x10
+    char valueStr[10]; // allocate a buffer for the string representation of the value
+    snprintf(valueStr, sizeof(valueStr), "%d", value); // convert the integer value to a string
+    ssd1306_SetCursor(2, y);
+    ssd1306_WriteString(valueStr, Font_7x10, White);
+    y += 10;
+    #endif
+    ssd1306_UpdateScreen();
+    HAL_Delay(50);
+}
+
+
 /*
  * This test shows how an 128x64 px OLED can replace a 0802 LCD.
  */

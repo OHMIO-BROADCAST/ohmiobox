@@ -64,6 +64,7 @@ ETH_DMADescTypeDef DMATxDscrTab[ETH_TX_DESC_CNT] __attribute__((section(".TxDecr
 ETH_TxPacketConfig TxConfig;
 
 ADC_HandleTypeDef hadc1;
+unsigned int analog_value_keypad;
 
 ETH_HandleTypeDef heth;
 
@@ -131,6 +132,8 @@ int main(void)
   ssd1306_Init();
   //INICIALIZAMOS EL SPLASH
   ssd1306_OhmioSplash();
+  ssd1306_OhmioMenuPrincipal();
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -139,10 +142,14 @@ int main(void)
   {
     /* USER CODE END WHILE */
 	  //INICIALIZAMOS EL SPLASH
-	  ssd1306_OhmioSplash();
 
-	  //ssd1306_OhmioMenuPrincipal();
-
+	  HAL_ADC_Start(&hadc1);
+	  if(HAL_ADC_PollForConversion(&hadc1, 10)==HAL_OK){
+		  analog_value_keypad=HAL_ADC_GetValue(&hadc1);
+		  ssd1306_DisplayAnalogValue(analog_value_keypad);
+	  }
+	  HAL_ADC_Stop(&hadc1);
+	  HAL_Delay(50);
 
     /* USER CODE BEGIN 3 */
   }
