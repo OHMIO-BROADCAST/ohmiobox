@@ -240,7 +240,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x1e ./Core/Src/ssd1306.o
  .debug_macro   0x0000000000000000       0x3c ./Core/Src/ssd1306.o
  .debug_macro   0x0000000000000000       0x34 ./Core/Src/ssd1306.o
- .debug_macro   0x0000000000000000       0x40 ./Core/Src/ssd1306.o
+ .debug_macro   0x0000000000000000       0x46 ./Core/Src/ssd1306.o
  .debug_macro   0x0000000000000000      0x299 ./Core/Src/ssd1306.o
  .debug_macro   0x0000000000000000       0x3b ./Core/Src/ssd1306.o
  .debug_macro   0x0000000000000000      0x103 ./Core/Src/ssd1306.o
@@ -312,7 +312,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x103 ./Core/Src/ssd1306_fonts.o
  .debug_macro   0x0000000000000000       0x6a ./Core/Src/ssd1306_fonts.o
  .debug_macro   0x0000000000000000      0x1df ./Core/Src/ssd1306_fonts.o
- .debug_macro   0x0000000000000000       0x40 ./Core/Src/ssd1306_fonts.o
+ .debug_macro   0x0000000000000000       0x46 ./Core/Src/ssd1306_fonts.o
  .group         0x0000000000000000        0xc ./Core/Src/ssd1306_tests.o
  .group         0x0000000000000000        0xc ./Core/Src/ssd1306_tests.o
  .group         0x0000000000000000        0xc ./Core/Src/ssd1306_tests.o
@@ -416,7 +416,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x35 ./Core/Src/ssd1306_tests.o
  .debug_macro   0x0000000000000000       0x20 ./Core/Src/ssd1306_tests.o
  .debug_macro   0x0000000000000000       0x6a ./Core/Src/ssd1306_tests.o
- .debug_macro   0x0000000000000000       0x40 ./Core/Src/ssd1306_tests.o
+ .debug_macro   0x0000000000000000       0x46 ./Core/Src/ssd1306_tests.o
  .debug_macro   0x0000000000000000      0x299 ./Core/Src/ssd1306_tests.o
  .debug_macro   0x0000000000000000       0x28 ./Core/Src/ssd1306_tests.o
  .debug_macro   0x0000000000000000       0x3b ./Core/Src/ssd1306_tests.o
@@ -5287,7 +5287,7 @@ LOAD c:/st/stm32cubeide_1.12.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.ext
  .debug_ranges  0x0000000000000be8      0x248 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart.o
  .debug_ranges  0x0000000000000e30      0x198 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_ll_usb.o
 
-.debug_macro    0x0000000000000000    0x27d34
+.debug_macro    0x0000000000000000    0x27d3a
  .debug_macro   0x0000000000000000      0x312 ./Core/Src/main.o
  .debug_macro   0x0000000000000312      0xa78 ./Core/Src/main.o
  .debug_macro   0x0000000000000d8a      0x299 ./Core/Src/main.o
@@ -5352,53 +5352,53 @@ LOAD c:/st/stm32cubeide_1.12.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.ext
  .debug_macro   0x0000000000024809       0x10 ./Core/Src/main.o
  .debug_macro   0x0000000000024819       0x35 ./Core/Src/main.o
  .debug_macro   0x000000000002484e       0x20 ./Core/Src/main.o
- .debug_macro   0x000000000002486e       0x40 ./Core/Src/main.o
- .debug_macro   0x00000000000248ae       0x10 ./Core/Src/main.o
- .debug_macro   0x00000000000248be       0x40 ./Core/Src/main.o
- .debug_macro   0x00000000000248fe      0x330 ./Core/Src/ssd1306.o
- .debug_macro   0x0000000000024c2e       0x4c ./Core/Src/ssd1306.o
- .debug_macro   0x0000000000024c7a       0x94 ./Core/Src/ssd1306.o
- .debug_macro   0x0000000000024d0e       0x28 ./Core/Src/ssd1306.o
- .debug_macro   0x0000000000024d36       0x57 ./Core/Src/ssd1306.o
- .debug_macro   0x0000000000024d8d      0x19b ./Core/Src/ssd1306.o
- .debug_macro   0x0000000000024f28       0x16 ./Core/Src/ssd1306.o
- .debug_macro   0x0000000000024f3e       0x16 ./Core/Src/ssd1306.o
- .debug_macro   0x0000000000024f54       0x29 ./Core/Src/ssd1306.o
- .debug_macro   0x0000000000024f7d       0x16 ./Core/Src/ssd1306.o
- .debug_macro   0x0000000000024f93       0x76 ./Core/Src/ssd1306_fonts.o
- .debug_macro   0x0000000000025009      0x3ba ./Core/Src/ssd1306_tests.o
- .debug_macro   0x00000000000253c3       0x1c ./Core/Src/ssd1306_tests.o
- .debug_macro   0x00000000000253df       0x10 ./Core/Src/ssd1306_tests.o
- .debug_macro   0x00000000000253ef       0x10 ./Core/Src/ssd1306_tests.o
- .debug_macro   0x00000000000253ff       0x1c ./Core/Src/ssd1306_tests.o
- .debug_macro   0x000000000002541b       0x52 ./Core/Src/ssd1306_tests.o
- .debug_macro   0x000000000002546d       0x22 ./Core/Src/ssd1306_tests.o
- .debug_macro   0x000000000002548f       0x10 ./Core/Src/ssd1306_tests.o
- .debug_macro   0x000000000002549f       0x52 ./Core/Src/ssd1306_tests.o
- .debug_macro   0x00000000000254f1       0xd5 ./Core/Src/ssd1306_tests.o
- .debug_macro   0x00000000000255c6       0x1c ./Core/Src/ssd1306_tests.o
- .debug_macro   0x00000000000255e2       0x3d ./Core/Src/ssd1306_tests.o
- .debug_macro   0x000000000002561f       0x16 ./Core/Src/ssd1306_tests.o
- .debug_macro   0x0000000000025635      0x145 ./Core/Src/ssd1306_tests.o
- .debug_macro   0x000000000002577a       0x5d ./Core/Src/ssd1306_tests.o
- .debug_macro   0x00000000000257d7      0x20b ./Core/Src/stm32f7xx_hal_msp.o
- .debug_macro   0x00000000000259e2      0x215 ./Core/Src/stm32f7xx_it.o
- .debug_macro   0x0000000000025bf7       0xff ./Core/Src/sysmem.o
- .debug_macro   0x0000000000025cf6      0x23b ./Core/Src/sysmem.o
- .debug_macro   0x0000000000025f31      0x1fc ./Core/Src/system_stm32f7xx.o
- .debug_macro   0x000000000002612d      0x220 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal.o
- .debug_macro   0x000000000002634d      0x1fc ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_cortex.o
- .debug_macro   0x0000000000026549      0x2d6 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_eth.o
- .debug_macro   0x000000000002681f      0x202 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.o
- .debug_macro   0x0000000000026a21      0x2c8 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c.o
- .debug_macro   0x0000000000026ce9      0x1fc ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c_ex.o
- .debug_macro   0x0000000000026ee5      0x208 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pcd.o
- .debug_macro   0x00000000000270ed      0x1fc ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pcd_ex.o
- .debug_macro   0x00000000000272e9      0x21a ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr.o
- .debug_macro   0x0000000000027503      0x220 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc.o
- .debug_macro   0x0000000000027723      0x1fc ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc_ex.o
- .debug_macro   0x000000000002791f      0x219 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart.o
- .debug_macro   0x0000000000027b38      0x1fc ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_ll_usb.o
+ .debug_macro   0x000000000002486e       0x46 ./Core/Src/main.o
+ .debug_macro   0x00000000000248b4       0x10 ./Core/Src/main.o
+ .debug_macro   0x00000000000248c4       0x40 ./Core/Src/main.o
+ .debug_macro   0x0000000000024904      0x330 ./Core/Src/ssd1306.o
+ .debug_macro   0x0000000000024c34       0x4c ./Core/Src/ssd1306.o
+ .debug_macro   0x0000000000024c80       0x94 ./Core/Src/ssd1306.o
+ .debug_macro   0x0000000000024d14       0x28 ./Core/Src/ssd1306.o
+ .debug_macro   0x0000000000024d3c       0x57 ./Core/Src/ssd1306.o
+ .debug_macro   0x0000000000024d93      0x19b ./Core/Src/ssd1306.o
+ .debug_macro   0x0000000000024f2e       0x16 ./Core/Src/ssd1306.o
+ .debug_macro   0x0000000000024f44       0x16 ./Core/Src/ssd1306.o
+ .debug_macro   0x0000000000024f5a       0x29 ./Core/Src/ssd1306.o
+ .debug_macro   0x0000000000024f83       0x16 ./Core/Src/ssd1306.o
+ .debug_macro   0x0000000000024f99       0x76 ./Core/Src/ssd1306_fonts.o
+ .debug_macro   0x000000000002500f      0x3ba ./Core/Src/ssd1306_tests.o
+ .debug_macro   0x00000000000253c9       0x1c ./Core/Src/ssd1306_tests.o
+ .debug_macro   0x00000000000253e5       0x10 ./Core/Src/ssd1306_tests.o
+ .debug_macro   0x00000000000253f5       0x10 ./Core/Src/ssd1306_tests.o
+ .debug_macro   0x0000000000025405       0x1c ./Core/Src/ssd1306_tests.o
+ .debug_macro   0x0000000000025421       0x52 ./Core/Src/ssd1306_tests.o
+ .debug_macro   0x0000000000025473       0x22 ./Core/Src/ssd1306_tests.o
+ .debug_macro   0x0000000000025495       0x10 ./Core/Src/ssd1306_tests.o
+ .debug_macro   0x00000000000254a5       0x52 ./Core/Src/ssd1306_tests.o
+ .debug_macro   0x00000000000254f7       0xd5 ./Core/Src/ssd1306_tests.o
+ .debug_macro   0x00000000000255cc       0x1c ./Core/Src/ssd1306_tests.o
+ .debug_macro   0x00000000000255e8       0x3d ./Core/Src/ssd1306_tests.o
+ .debug_macro   0x0000000000025625       0x16 ./Core/Src/ssd1306_tests.o
+ .debug_macro   0x000000000002563b      0x145 ./Core/Src/ssd1306_tests.o
+ .debug_macro   0x0000000000025780       0x5d ./Core/Src/ssd1306_tests.o
+ .debug_macro   0x00000000000257dd      0x20b ./Core/Src/stm32f7xx_hal_msp.o
+ .debug_macro   0x00000000000259e8      0x215 ./Core/Src/stm32f7xx_it.o
+ .debug_macro   0x0000000000025bfd       0xff ./Core/Src/sysmem.o
+ .debug_macro   0x0000000000025cfc      0x23b ./Core/Src/sysmem.o
+ .debug_macro   0x0000000000025f37      0x1fc ./Core/Src/system_stm32f7xx.o
+ .debug_macro   0x0000000000026133      0x220 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal.o
+ .debug_macro   0x0000000000026353      0x1fc ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_cortex.o
+ .debug_macro   0x000000000002654f      0x2d6 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_eth.o
+ .debug_macro   0x0000000000026825      0x202 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.o
+ .debug_macro   0x0000000000026a27      0x2c8 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c.o
+ .debug_macro   0x0000000000026cef      0x1fc ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c_ex.o
+ .debug_macro   0x0000000000026eeb      0x208 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pcd.o
+ .debug_macro   0x00000000000270f3      0x1fc ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pcd_ex.o
+ .debug_macro   0x00000000000272ef      0x21a ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr.o
+ .debug_macro   0x0000000000027509      0x220 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc.o
+ .debug_macro   0x0000000000027729      0x1fc ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc_ex.o
+ .debug_macro   0x0000000000027925      0x219 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart.o
+ .debug_macro   0x0000000000027b3e      0x1fc ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_ll_usb.o
 
 .debug_line     0x0000000000000000    0x1515e
  .debug_line    0x0000000000000000      0xa8f ./Core/Src/main.o
@@ -5424,50 +5424,50 @@ LOAD c:/st/stm32cubeide_1.12.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.ext
  .debug_line    0x000000000001059a     0x30e0 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart.o
  .debug_line    0x000000000001367a     0x1ae4 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_ll_usb.o
 
-.debug_str      0x0000000000000000    0xf14b1
- .debug_str     0x0000000000000000    0xea179 ./Core/Src/main.o
-                                      0xea9ec (size before relaxing)
- .debug_str     0x00000000000ea179      0xcfa ./Core/Src/ssd1306.o
-                                      0xea1f0 (size before relaxing)
- .debug_str     0x00000000000eae73       0x7f ./Core/Src/ssd1306_fonts.o
-                                       0x3dbf (size before relaxing)
- .debug_str     0x00000000000eaef2     0x10f2 ./Core/Src/ssd1306_tests.o
-                                      0xea21e (size before relaxing)
- .debug_str     0x00000000000ebfe4      0x335 ./Core/Src/stm32f7xx_hal_msp.o
+.debug_str      0x0000000000000000    0xf14fb
+ .debug_str     0x0000000000000000    0xea1c3 ./Core/Src/main.o
+                                      0xeaa36 (size before relaxing)
+ .debug_str     0x00000000000ea1c3      0xcfa ./Core/Src/ssd1306.o
+                                      0xea23a (size before relaxing)
+ .debug_str     0x00000000000eaebd       0x7f ./Core/Src/ssd1306_fonts.o
+                                       0x3dd2 (size before relaxing)
+ .debug_str     0x00000000000eaf3c     0x10f2 ./Core/Src/ssd1306_tests.o
+                                      0xea268 (size before relaxing)
+ .debug_str     0x00000000000ec02e      0x335 ./Core/Src/stm32f7xx_hal_msp.o
                                       0xe78dd (size before relaxing)
- .debug_str     0x00000000000ec319       0xc9 ./Core/Src/stm32f7xx_it.o
+ .debug_str     0x00000000000ec363       0xc9 ./Core/Src/stm32f7xx_it.o
                                       0xe6466 (size before relaxing)
- .debug_str     0x00000000000ec3e2      0x4da ./Core/Src/sysmem.o
+ .debug_str     0x00000000000ec42c      0x4da ./Core/Src/sysmem.o
                                        0x5dcc (size before relaxing)
- .debug_str     0x00000000000ec8bc      0x190 ./Core/Src/system_stm32f7xx.o
+ .debug_str     0x00000000000ec906      0x190 ./Core/Src/system_stm32f7xx.o
                                       0xe618e (size before relaxing)
- .debug_str     0x00000000000eca4c       0x36 ./Core/Startup/startup_stm32f746zgtx.o
+ .debug_str     0x00000000000eca96       0x36 ./Core/Startup/startup_stm32f746zgtx.o
                                          0x74 (size before relaxing)
- .debug_str     0x00000000000eca82      0x9ad ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal.o
+ .debug_str     0x00000000000ecacc      0x9ad ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal.o
                                       0xe6af7 (size before relaxing)
- .debug_str     0x00000000000ed42f      0x334 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_cortex.o
+ .debug_str     0x00000000000ed479      0x334 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_cortex.o
                                       0xe6ae2 (size before relaxing)
- .debug_str     0x00000000000ed763     0x11c7 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_eth.o
+ .debug_str     0x00000000000ed7ad     0x11c7 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_eth.o
                                       0xe795b (size before relaxing)
- .debug_str     0x00000000000ee92a       0xe8 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.o
+ .debug_str     0x00000000000ee974       0xe8 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.o
                                       0xe624c (size before relaxing)
- .debug_str     0x00000000000eea12      0xde0 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c.o
+ .debug_str     0x00000000000eea5c      0xde0 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c.o
                                       0xe73a4 (size before relaxing)
- .debug_str     0x00000000000ef7f2       0x89 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c_ex.o
+ .debug_str     0x00000000000ef83c       0x89 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c_ex.o
                                       0xe664a (size before relaxing)
- .debug_str     0x00000000000ef87b      0x81e ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pcd.o
+ .debug_str     0x00000000000ef8c5      0x81e ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pcd.o
                                       0xe6bab (size before relaxing)
- .debug_str     0x00000000000f0099      0x12d ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pcd_ex.o
+ .debug_str     0x00000000000f00e3      0x12d ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pcd_ex.o
                                       0xe64ac (size before relaxing)
- .debug_str     0x00000000000f01c6      0x2ac ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr.o
+ .debug_str     0x00000000000f0210      0x2ac ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr.o
                                       0xe642f (size before relaxing)
- .debug_str     0x00000000000f0472      0x233 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc.o
+ .debug_str     0x00000000000f04bc      0x233 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc.o
                                       0xe64f0 (size before relaxing)
- .debug_str     0x00000000000f06a5      0x147 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc_ex.o
+ .debug_str     0x00000000000f06ef      0x147 ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc_ex.o
                                       0xe6428 (size before relaxing)
- .debug_str     0x00000000000f07ec      0x86a ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart.o
+ .debug_str     0x00000000000f0836      0x86a ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart.o
                                       0xe6e3d (size before relaxing)
- .debug_str     0x00000000000f1056      0x45b ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_ll_usb.o
+ .debug_str     0x00000000000f10a0      0x45b ./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_ll_usb.o
                                       0xe6a31 (size before relaxing)
 
 .comment        0x0000000000000000       0x50
