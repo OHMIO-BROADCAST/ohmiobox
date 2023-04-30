@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "globals.h"
 #include "string.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -42,7 +43,6 @@
 /* USER CODE BEGIN PM */
 
 /* USER CODE END PM */
-
 /* Private variables ---------------------------------------------------------*/
 #if defined ( __ICCARM__ ) /*!< IAR Compiler */
 #pragma location=0x2004c000
@@ -99,6 +99,7 @@ static void MX_ADC1_Init(void);
   * @brief  The application entry point.
   * @retval int
   */
+
 int main(void)
 {
   /* USER CODE BEGIN 1 */
