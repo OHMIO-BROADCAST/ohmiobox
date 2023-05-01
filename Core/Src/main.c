@@ -99,6 +99,8 @@ static void MX_ADC1_Init(void);
   * @brief  The application entry point.
   * @retval int
   */
+extern int indexMenu=0;
+extern int screen=0;
 
 int main(void)
 {
@@ -134,6 +136,8 @@ int main(void)
   //INICIALIZAMOS EL SPLASH
   ssd1306_OhmioSplash();
   ssd1306_OhmioMenuPrincipal();
+//  initializeData();
+
 
   /* USER CODE END 2 */
 
@@ -147,8 +151,12 @@ int main(void)
 	  HAL_ADC_Start(&hadc1);
 	  if(HAL_ADC_PollForConversion(&hadc1, 10)==HAL_OK){
 		  analog_value_keypad=HAL_ADC_GetValue(&hadc1);
-		  ssd1306_DisplayAnalogValue(analog_value_keypad);
+		  ssd1306_DisplayAnalogValue(analog_value_keypad, indexMenu, screen);
 	  }
+
+	   if(analog_value_keypad >= 800 && analog_value_keypad <= 900){
+	        	indexMenu++;
+	        }
 	  HAL_ADC_Stop(&hadc1);
 	  HAL_Delay(50);
 

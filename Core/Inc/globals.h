@@ -7,4 +7,5 @@
 
 #ifndef INC_GLOBALS_H_
 #define INC_GLOBALS_H_
+extern int indexMenu;
 #endif /* INC_GLOBALS_H_ */
