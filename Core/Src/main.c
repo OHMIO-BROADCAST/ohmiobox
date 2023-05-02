@@ -101,6 +101,7 @@ static void MX_ADC1_Init(void);
   */
 extern int indexMenu=0;
 extern int screen=0;
+static uint32_t last_arriba_time = 0; // keeps track of the last time "ARRIBA" was displayed
 
 int main(void)
 {
@@ -154,9 +155,20 @@ int main(void)
 		  ssd1306_DisplayAnalogValue(analog_value_keypad, indexMenu, screen);
 	  }
 
+	  //Displacement vertical
 	   if(analog_value_keypad >= 800 && analog_value_keypad <= 900){
-	        	indexMenu++;
-	        }
+		   if (indexMenu==2){
+			   indexMenu=0;
+		   }else{
+			   indexMenu++;
+		   }
+
+	   }
+
+
+
+
+
 	  HAL_ADC_Stop(&hadc1);
 	  HAL_Delay(50);
 
