@@ -434,7 +434,7 @@ void ssd1306_TestFonts1() {
 
 #ifdef SSD1306_INCLUDE_FONT_6x8
    ssd1306_SetCursor(2, y);
-   ssd1306_WriteString("Version 1.1", Font_6x8, White);
+   ssd1306_WriteString("Version 1.0", Font_6x8, White);
    #endif
 
     ssd1306_UpdateScreen();
@@ -665,7 +665,7 @@ void ssd1306_PrintRFMenu(int value, int indexMenu, int screen){
 
 	    ssd1306_Fill(Black);
 
-	    ssd1306_SetCursor(30, y);
+	    ssd1306_SetCursor(35, y);
 	    ssd1306_WriteString("BROADCAST", Font_7x10, White);
 	    y += 10;
 
