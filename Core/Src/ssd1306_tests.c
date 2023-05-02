@@ -357,6 +357,139 @@ void ssd1306_PrintPrincipalMenu(int value, int indexMenu, int screen){
 	    ssd1306_UpdateScreen();
 }
 
+void ssd1306_PrintDashboardMenu(int value, int indexMenu, int screen){
+	 uint8_t y = 0;
+	    char stringDirection[10] = "";
+
+	    ssd1306_Fill(Black);
+
+	    #ifdef SSD1306_INCLUDE_FONT_11x18
+	    ssd1306_SetCursor(2, y);
+	    ssd1306_WriteString("OHMIO BOX", Font_11x18, White);
+	    //ssd1306_DrawRectangle(0,y, 128, 10, White);
+
+	    y += 20;
+	    #endif
+
+
+
+		#ifdef SSD1306_INCLUDE_FONT_7x10
+		ssd1306_SetCursor(2, y);
+	    if(indexMenu==0){
+	        ssd1306_WriteString("LoRa Status", Font_7x10, Black);
+	    }
+	    else{
+	        ssd1306_WriteString("LoRa Status", Font_7x10, White);
+	    }
+		y += 10;
+		#endif
+
+		#ifdef SSD1306_INCLUDE_FONT_7x10
+		ssd1306_SetCursor(2, y);
+		if(indexMenu==1){
+	        ssd1306_WriteString("RF", Font_7x10, Black);
+		}
+		else{
+	        ssd1306_WriteString("RF", Font_7x10, White);
+		}
+		y += 10;
+
+		#endif
+
+		#ifdef SSD1306_INCLUDE_FONT_7x10
+		ssd1306_SetCursor(2, y);
+		if(indexMenu==2){
+			ssd1306_WriteString("BACK", Font_7x10, Black);
+		}
+		else{
+			ssd1306_WriteString("BACK", Font_7x10, White);
+		}
+		y += 10;
+
+		#endif
+
+
+
+		 if(value >= 2850 && value <= 2950){
+			strcpy(stringDirection, "DERECHA");
+		}
+		else if(value >= 1850 && value <= 1950){
+			strcpy(stringDirection, "IZQUIERDA");
+		}
+		else {
+			strcpy(stringDirection, "NORMAL");
+		}
+
+	    ssd1306_UpdateScreen();
+}
+
+void ssd1306_PrintEnergyMenu(int value, int indexMenu, int screen){
+	 uint8_t y = 0;
+	    char stringDirection[10] = "";
+
+	    ssd1306_Fill(Black);
+
+	    #ifdef SSD1306_INCLUDE_FONT_11x18
+	    ssd1306_SetCursor(2, y);
+	    ssd1306_WriteString("ENERGY", Font_11x18, White);
+	    //ssd1306_DrawRectangle(0,y, 128, 10, White);
+
+	    y += 20;
+	    #endif
+
+
+
+		#ifdef SSD1306_INCLUDE_FONT_7x10
+		ssd1306_SetCursor(2, y);
+	    if(indexMenu==0){
+	        ssd1306_WriteString("Power Supply", Font_7x10, Black);
+	    }
+	    else{
+	        ssd1306_WriteString("Power Supply", Font_7x10, White);
+	    }
+		y += 10;
+		#endif
+
+		#ifdef SSD1306_INCLUDE_FONT_7x10
+		ssd1306_SetCursor(2, y);
+		if(indexMenu==1){
+	        ssd1306_WriteString("Status: 80%", Font_7x10, Black);
+		}
+		else{
+	        ssd1306_WriteString("Status: 80%", Font_7x10, White);
+		}
+		y += 10;
+
+		#endif
+
+		#ifdef SSD1306_INCLUDE_FONT_7x10
+		ssd1306_SetCursor(2, y);
+		if(indexMenu==2){
+			ssd1306_WriteString("BACK", Font_7x10, Black);
+		}
+		else{
+			ssd1306_WriteString("BACK", Font_7x10, White);
+		}
+		y += 10;
+
+		#endif
+
+
+
+		 if(value >= 2850 && value <= 2950){
+			strcpy(stringDirection, "DERECHA");
+		}
+		else if(value >= 1850 && value <= 1950){
+			strcpy(stringDirection, "IZQUIERDA");
+		}
+		else {
+			strcpy(stringDirection, "NORMAL");
+		}
+
+	    ssd1306_UpdateScreen();
+}
+
+
 void ssd1306_PrintSettingsMenu(int value, int indexMenu, int screen){
 	 uint8_t y = 0;
 	    char stringDirection[10] = "";
@@ -424,10 +557,16 @@ void ssd1306_PrintSettingsMenu(int value, int indexMenu, int screen){
 }
 
 void ssd1306_DisplayAnalogValue(int value, int indexMenu, int screen) {
-	if(screen==0){
-		   ssd1306_PrintPrincipalMenu(value, indexMenu, screen);
-	}else if (screen==3){
+	if (screen==1){
+			   ssd1306_PrintDashboardMenu(value, indexMenu, screen);
+		}
+	else if (screen==2){
+		   ssd1306_PrintEnergyMenu(value, indexMenu, screen);
+	}
+	else if (screen==3){
 		   ssd1306_PrintSettingsMenu(value, indexMenu, screen);
+	}else{
+		   ssd1306_PrintPrincipalMenu(value, indexMenu, screen);
 	}
     HAL_Delay(50);
 }

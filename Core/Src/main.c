@@ -192,7 +192,30 @@ int main(void)
 					ssd1306_UpdateScreen();
 				}
 			}
-			//Menu Settings
+			// Dashboard
+				if(screen==1){
+					if(indexMenu==0){
+						//screen=1;
+					}else if (indexMenu==2){
+						//option Atras back
+						screen=0;
+						indexMenu=0;
+						ssd1306_UpdateScreen();
+					}
+				}
+			// Energy
+				if(screen==2){
+					if(indexMenu==0){
+						//option power no hace nada
+						//screen=1;
+					}else if (indexMenu==2){
+						//option Atras back
+						screen=0;
+						indexMenu=0;
+						ssd1306_UpdateScreen();
+					}
+				}
+			// Settings
 			if(screen==3){
 				if(indexMenu==0){
 					//option Version no hace nada
