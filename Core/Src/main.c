@@ -165,7 +165,46 @@ int main(void)
 
 	   }
 
+	   //Displacement between screens
+	   //screen=0 -> MENU PRINCIPAL
+	   //screen=1 -> DASHBOARD
+	   //screen=2 -> ENERGIA
+	   //screen=3 -> SETTINGS
 
+
+	      if(analog_value_keypad >= 0 && analog_value_keypad <= 100){
+			//Select
+	    	//Menu Principal
+			if(screen==0){
+				if(indexMenu==0){
+					//option Dashboard
+					screen=1;
+					indexMenu=0;
+					ssd1306_UpdateScreen();
+				}else if (indexMenu==1){
+					//option Energy
+					screen=2;
+					indexMenu=0;
+					ssd1306_UpdateScreen();
+				}else if (indexMenu==2){
+					screen=3;
+					indexMenu=0;
+					ssd1306_UpdateScreen();
+				}
+			}
+			//Menu Settings
+			if(screen==3){
+				if(indexMenu==0){
+					//option Version no hace nada
+					//screen=1;
+				}else if (indexMenu==2){
+					//option Atras back
+					screen=0;
+					indexMenu=0;
+					ssd1306_UpdateScreen();
+				}
+			}
+	      }
 
 
 

@@ -326,14 +326,8 @@ void ssd1306_PrintPrincipalMenu(int value, int indexMenu, int screen){
 
 
 
-	        if(value >= 0 && value <= 100){
-	            strcpy(stringDirection, "SELECT");
-	            if(indexMenu=2){
-	            	screen=3;
-	            }
-	        }
 
-	        else if(value >= 2850 && value <= 2950){
+	         if(value >= 2850 && value <= 2950){
 	            strcpy(stringDirection, "DERECHA");
 	        }
 	        else if(value >= 1850 && value <= 1950){
@@ -344,21 +338,21 @@ void ssd1306_PrintPrincipalMenu(int value, int indexMenu, int screen){
 	        }
 
 
-	    #ifdef SSD1306_INCLUDE_FONT_7x10
-	    ssd1306_SetCursor(55, 20);
-	    char index_str[3]; // assuming index is a single-digit number
-	    sprintf(index_str, "%d", indexMenu); // convert index to a string
-	    ssd1306_SetCursor(50, y); // set the cursor position
-	    ssd1306_WriteString(index_str, Font_7x10, White); // write the string to the display    y += 10;
-	    #endif
+	   // #ifdef SSD1306_INCLUDE_FONT_7x10
+	    //ssd1306_SetCursor(55, 20);
+	    //char index_str[3]; // assuming index is a single-digit number
+	    //sprintf(index_str, "%d", indexMenu); // convert index to a string
+	    //ssd1306_SetCursor(50, y); // set the cursor position
+	         //ssd1306_WriteString(index_str, Font_7x10, White); // write the string to the display    y += 10;
+	         //#endif
 
-		#ifdef SSD1306_INCLUDE_FONT_7x10
-	    ssd1306_SetCursor(55, 30);
-	    char screen_str[3]; // assuming index is a single-digit number
-	    sprintf(screen_str, "%d", screen); // convert index to a string
-	    ssd1306_SetCursor(20, y); // set the cursor position
-	    ssd1306_WriteString(screen_str, Font_7x10, White); // write the string to the display    y += 10;
-	    #endif
+	         //#ifdef SSD1306_INCLUDE_FONT_7x10
+	         //ssd1306_SetCursor(55, 30);
+	         //char screen_str[3]; // assuming index is a single-digit number
+	         //sprintf(screen_str, "%d", screen); // convert index to a string
+	         //ssd1306_SetCursor(20, y); // set the cursor position
+	         //ssd1306_WriteString(screen_str, Font_7x10, White); // write the string to the display    y += 10;
+	         //   #endif
 
 	    ssd1306_UpdateScreen();
 }
@@ -382,11 +376,10 @@ void ssd1306_PrintSettingsMenu(int value, int indexMenu, int screen){
 		#ifdef SSD1306_INCLUDE_FONT_7x10
 		ssd1306_SetCursor(2, y);
 	    if(indexMenu==0){
-	        ssd1306_WriteString("OHMIO Box v1.0", Font_7x10, Black);
+	        ssd1306_WriteString("ID: a23d-4f5g6", Font_7x10, Black);
 	    }
 	    else{
-	        ssd1306_WriteString("OHMIO Box v1.0", Font_7x10, White);
-
+	        ssd1306_WriteString("ID: a23d-4f5g6", Font_7x10, White);
 	    }
 		y += 10;
 		#endif
@@ -394,6 +387,18 @@ void ssd1306_PrintSettingsMenu(int value, int indexMenu, int screen){
 		#ifdef SSD1306_INCLUDE_FONT_7x10
 		ssd1306_SetCursor(2, y);
 		if(indexMenu==1){
+	        ssd1306_WriteString("OHMIO Box v1.0", Font_7x10, Black);
+		}
+		else{
+	        ssd1306_WriteString("OHMIO Box v1.0", Font_7x10, White);
+		}
+		y += 10;
+
+		#endif
+
+		#ifdef SSD1306_INCLUDE_FONT_7x10
+		ssd1306_SetCursor(2, y);
+		if(indexMenu==2){
 			ssd1306_WriteString("BACK", Font_7x10, Black);
 		}
 		else{
@@ -403,14 +408,9 @@ void ssd1306_PrintSettingsMenu(int value, int indexMenu, int screen){
 
 		#endif
 
-		if(value >= 0 && value <= 100){
-			strcpy(stringDirection, "SELECT");
-			if(indexMenu==1){
-				screen=0;
-			}
-		}
 
-		else if(value >= 2850 && value <= 2950){
+
+		 if(value >= 2850 && value <= 2950){
 			strcpy(stringDirection, "DERECHA");
 		}
 		else if(value >= 1850 && value <= 1950){
@@ -419,22 +419,6 @@ void ssd1306_PrintSettingsMenu(int value, int indexMenu, int screen){
 		else {
 			strcpy(stringDirection, "NORMAL");
 		}
-
-
-		#ifdef SSD1306_INCLUDE_FONT_7x10
-	    ssd1306_SetCursor(55, 20);
-	    char index_str[3]; // assuming index is a single-digit number
-	    sprintf(index_str, "%d", indexMenu); // convert index to a string
-	    ssd1306_SetCursor(50, y); // set the cursor position
-	    ssd1306_WriteString(index_str, Font_7x10, White); // write the string to the display    y += 10;
-	    #endif
-		#ifdef SSD1306_INCLUDE_FONT_7x10
-	    ssd1306_SetCursor(55, 30);
-	    char screen_str[3]; // assuming index is a single-digit number
-	    sprintf(screen_str, "%d", screen); // convert index to a string
-	    ssd1306_SetCursor(10, y); // set the cursor position
-	    ssd1306_WriteString(screen_str, Font_7x10, White); // write the string to the display    y += 10;
-	    #endif
 
 	    ssd1306_UpdateScreen();
 }
