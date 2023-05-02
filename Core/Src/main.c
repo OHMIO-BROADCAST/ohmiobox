@@ -157,11 +157,29 @@ int main(void)
 
 	  //Displacement vertical
 	   if(analog_value_keypad >= 800 && analog_value_keypad <= 900){
-		   if (indexMenu==2){
-			   indexMenu=0;
-		   }else{
-			   indexMenu++;
-		   }
+        if(screen==1){
+          if (indexMenu==4){
+            indexMenu=0;
+          }
+          else{
+            indexMenu++;
+          }
+        }else if(screen==4){
+          if (indexMenu==4){
+            indexMenu=0;
+          }
+          else{
+            indexMenu++;
+          }
+        }
+        else{
+          if (indexMenu==2){
+            indexMenu=0;
+          }
+          else{
+            indexMenu++;
+          }
+        }
 
 	   }
 
@@ -194,9 +212,12 @@ int main(void)
 			}
 			// Dashboard
 				if(screen==1){
-					if(indexMenu==0){
-						//screen=1;
-					}else if (indexMenu==2){
+					if (indexMenu==0){
+						//option RF
+						screen=4;
+						indexMenu=0;
+						ssd1306_UpdateScreen();
+					}else if (indexMenu==3){
 						//option Atras back
 						screen=0;
 						indexMenu=0;
@@ -227,6 +248,18 @@ int main(void)
 					ssd1306_UpdateScreen();
 				}
 			}
+      // RF Statistics
+      if(screen==4){
+        if(indexMenu==0){
+					//screen=1;
+				}
+        else if (indexMenu==4){
+					//option Atras back
+					screen=1;
+					indexMenu=0;
+					ssd1306_UpdateScreen();
+				}
+      }
 	      }
 
 
