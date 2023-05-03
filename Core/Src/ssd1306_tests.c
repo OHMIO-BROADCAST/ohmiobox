@@ -735,6 +735,97 @@ void ssd1306_PrintRFMenu(int value, int indexMenu, int screen){
 
 	    ssd1306_UpdateScreen();
 }
+void ssd1306_PrintCloudMenu(int value, int indexMenu, int screen, uint32_t  IPv4, uint32_t  Gateway){
+		 uint8_t y = 0;
+	    char stringDirection[10] = "";
+
+	    ssd1306_Fill(Black);
+
+	    ssd1306_SetCursor(35, y);
+	    ssd1306_WriteString("CLOUD", Font_7x10, White);
+	    y += 10;
+
+		char ip_string[16]; // arreglo de caracteres para almacenar la dirección IP como cadena
+
+		// Convertir la dirección IP a una cadena de caracteres
+		sprintf(ip_string, "%d.%d.%d.%d", (int)((IPv4>>24)&0xff), (int)((IPv4>>16)&0xff), (int)((IPv4>>8)&0xff), (int)(IPv4&0xff));
+
+		char ip_gateway[16]; // arreglo de caracteres para almacenar la dirección IP como cadena
+
+		// Convertir la dirección IP a una cadena de caracteres
+		sprintf(ip_gateway, "%d.%d.%d.%d", (int)((Gateway>>24)&0xff), (int)((Gateway>>16)&0xff), (int)((Gateway>>8)&0xff), (int)(Gateway&0xff));
+
+
+		ssd1306_SetCursor(2, y);
+			if(indexMenu==0){
+				ssd1306_WriteString("IPv4:", Font_7x10, Black);
+				y += 10;
+				ssd1306_SetCursor(2, y);
+				ssd1306_WriteString(ip_string, Font_6x8, Black);
+
+			}
+			else{
+				ssd1306_WriteString("IPV4:", Font_7x10, White);
+				y += 10;
+				ssd1306_SetCursor(2, y);
+				ssd1306_WriteString(ip_string, Font_6x8, White);
+			}
+		y += 10;
+		
+		ssd1306_SetCursor(2, y);
+		if(indexMenu==1){
+			ssd1306_WriteString("Gateway:", Font_7x10, Black);
+			y += 10;
+			ssd1306_SetCursor(2, y);
+			ssd1306_WriteString(ip_gateway, Font_6x8, Black);	
+		}
+		else{
+		ssd1306_WriteString("Gateway:", Font_7x10, White);
+			y += 10;
+			ssd1306_SetCursor(2, y);
+			ssd1306_WriteString(ip_gateway, Font_6x8, White);
+		}
+		y += 10;
+
+		/* ssd1306_SetCursor(2, y);
+		if(indexMenu==2){
+			ssd1306_WriteString("Subnet:", Font_7x10, Black);
+			y += 10;
+			ssd1306_SetCursor(2, y);
+			ssd1306_WriteString("192.168.132.242", Font_6x8, Black);	
+				}
+		else{
+		ssd1306_WriteString("Subnet:", Font_7x10, White);
+			y += 10;
+			ssd1306_SetCursor(2, y);
+			ssd1306_WriteString("192.168.132.242", Font_6x8, White);
+		}
+		y += 10; */
+
+		
+
+		ssd1306_SetCursor(2, y);
+		if(indexMenu==2){
+			ssd1306_WriteString("BACK", Font_7x10, Black);
+		}
+		else{
+			ssd1306_WriteString("BACK", Font_7x10, White);
+		}
+		y += 10;
+
+
+		 if(value >= 2850 && value <= 2950){
+			strcpy(stringDirection, "DERECHA");
+		}
+		else if(value >= 1850 && value <= 1950){
+			strcpy(stringDirection, "IZQUIERDA");
+		}
+		else {
+			strcpy(stringDirection, "NORMAL");
+		}
+
+	    ssd1306_UpdateScreen();
+}
 
 void ssd1306_PrintSettingsMenu(int value, int indexMenu, int screen){
 	 uint8_t y = 0;
@@ -802,7 +893,7 @@ void ssd1306_PrintSettingsMenu(int value, int indexMenu, int screen){
 	    ssd1306_UpdateScreen();
 }
 
-void ssd1306_DisplayAnalogValue(int value, int indexMenu, int screen) {
+void ssd1306_DisplayAnalogValue(int value, int indexMenu, int screen, char IPv4, const Gateway) {
 	if (screen==1){
 			   ssd1306_PrintDashboardMenu(value, indexMenu, screen);
 		}
@@ -813,6 +904,9 @@ void ssd1306_DisplayAnalogValue(int value, int indexMenu, int screen) {
 		   ssd1306_PrintSettingsMenu(value, indexMenu, screen);
 	}else if (screen==4){
 		   ssd1306_PrintRFMenu(value, indexMenu, screen);
+	}
+	else if (screen==5){
+		   ssd1306_PrintCloudMenu(value, indexMenu, screen, IPv4, Gateway);
 	}
 	else{
 		   ssd1306_PrintPrincipalMenu(value, indexMenu, screen);

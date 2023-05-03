@@ -142,19 +142,19 @@ int main(void)
 	  //INICIALIZAMOS EL SPLASH
     ethernetif_input(&gnetif);
     sys_check_timeouts();
-    printf("IP Address: %s\n",
-    ip4addr_ntoa(netif_ip4_addr(&gnetif)));
+/*     printf("IP Address: %s\n",
+    ip4addr_ntoa(netif_ip4_addr(&gnetif.addr)));
     
     printf("Local Subnet: %s\n",
            ip4_addr_get_u32(netif_ip4_netmask(&gnetif)));
 
-    printf("Local Gateway: %s\n",
-       ip4_addr_get_u32(netif_ip4_gw(&gnetif)));
+    printf("Local Gateway: %s\n"
+       ip4_addr_get_u32(netif_ip4_gw(&gnetif))); */
 
 	  HAL_ADC_Start(&hadc3);
 	  if(HAL_ADC_PollForConversion(&hadc3, 10)==HAL_OK){
 		  analog_value_keypad=HAL_ADC_GetValue(&hadc3);
-		  ssd1306_DisplayAnalogValue(analog_value_keypad, indexMenu, screen);
+		  ssd1306_DisplayAnalogValue(analog_value_keypad, indexMenu, screen, ip4_addr_get_u32(netif_ip4_addr(&gnetif)), ip4_addr_get_u32(netif_ip4_gw(&gnetif)) );
 	  }
 
 	  //Displacement vertical
@@ -190,6 +190,9 @@ int main(void)
 	   //screen=1 -> DASHBOARD
 	   //screen=2 -> ENERGIA
 	   //screen=3 -> SETTINGS
+	   //screen=4 -> BROADCASt
+     //screen=5 -> CLOUD
+
 
 
 	      if(analog_value_keypad >= 0 && analog_value_keypad <= 100){
@@ -219,7 +222,13 @@ int main(void)
 						screen=4;
 						indexMenu=0;
 						ssd1306_UpdateScreen();
-					}else if (indexMenu==3){
+					}else if (indexMenu==1){
+						//option RF
+						screen=5;
+						indexMenu=0;
+						ssd1306_UpdateScreen();
+					}
+          else if (indexMenu==2){
 						//option Atras back
 						screen=0;
 						indexMenu=0;
@@ -250,12 +259,24 @@ int main(void)
 					ssd1306_UpdateScreen();
 				}
 			}
-      // RF Statistics
+      // BROADCAST
       if(screen==4){
         if(indexMenu==0){
 					//screen=1;
 				}
         else if (indexMenu==4){
+					//option Atras back
+					screen=1;
+					indexMenu=0;
+					ssd1306_UpdateScreen();
+				}
+      }
+      // CLOUD
+      if(screen==5){
+        if(indexMenu==0){
+					//screen=1;
+				}
+        else if (indexMenu==2){
 					//option Atras back
 					screen=1;
 					indexMenu=0;
