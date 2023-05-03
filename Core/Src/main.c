@@ -26,6 +26,14 @@
 #include "ssd1306_tests.h"
 #include "ssd1306_fonts.h"
 
+#include "lwip/opt.h"
+#include "lwip/timeouts.h"
+#include "lwip/netif.h"
+#include "lwip/ip4_addr.h"
+#include "lwip/dhcp.h"
+#include "ethernetif.h"
+#include "string.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -83,8 +91,14 @@ static void MX_ADC3_Init(void);
 extern int screen=0;
 extern struct netif gnetif;
 
+
+
+
+
 static uint32_t last_arriba_time = 0; // keeps track of the last time "ARRIBA" was displayed
 unsigned int analog_value_keypad;
+
+
 int main(void)
 {
   /* USER CODE BEGIN 1 */
@@ -136,25 +150,32 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  uint32_t ipaddr;
+  uint32_t netmask;
+   char ip_str[16];
+   char netmask_str[16];
+
   while (1)
   {
     /* USER CODE END WHILE */
 	  //INICIALIZAMOS EL SPLASH
     ethernetif_input(&gnetif);
     sys_check_timeouts();
-/*     printf("IP Address: %s\n",
-    ip4addr_ntoa(netif_ip4_addr(&gnetif.addr)));
-    
-    printf("Local Subnet: %s\n",
-           ip4_addr_get_u32(netif_ip4_netmask(&gnetif)));
 
-    printf("Local Gateway: %s\n"
-       ip4_addr_get_u32(netif_ip4_gw(&gnetif))); */
+    ipaddr = netif_ip4_addr(&gnetif);
+    netmask = netif_ip4_netmask(&gnetif);
+
+// Convertir la dirección IP en una cadena de caracteres
+sprintf(ip_str, "%d.%d.%d.%d", (ipaddr & 0xff), ((ipaddr >> 8) & 0xff), ((ipaddr >> 16) & 0xff), ((ipaddr >> 24) & 0xff));
+
+// Convertir la máscara de subred en una cadena de caracteres
+sprintf(netmask_str, "%d.%d.%d.%d", (netmask & 0xff), ((netmask >> 8) & 0xff), ((netmask >> 16) & 0xff), ((netmask >> 24) & 0xff));
+
 
 	  HAL_ADC_Start(&hadc3);
 	  if(HAL_ADC_PollForConversion(&hadc3, 10)==HAL_OK){
 		  analog_value_keypad=HAL_ADC_GetValue(&hadc3);
-		  ssd1306_DisplayAnalogValue(analog_value_keypad, indexMenu, screen, ip4_addr_get_u32(netif_ip4_addr(&gnetif)), ip4_addr_get_u32(netif_ip4_gw(&gnetif)) );
+		  ssd1306_DisplayAnalogValue(analog_value_keypad, indexMenu, screen, ip_str, netmask_str);
 	  }
 
 	  //Displacement vertical
@@ -223,12 +244,12 @@ int main(void)
 						indexMenu=0;
 						ssd1306_UpdateScreen();
 					}else if (indexMenu==1){
-						//option RF
+						//option CLOUD
 						screen=5;
 						indexMenu=0;
 						ssd1306_UpdateScreen();
 					}
-          else if (indexMenu==2){
+          else if (indexMenu==3){
 						//option Atras back
 						screen=0;
 						indexMenu=0;
