@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "lwip.h"
+#include "stdio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -80,7 +81,12 @@ static void MX_ADC3_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+int _write(int file, char *ptr, int len){
+	int i =0;
+	for (i=0; i<len; i++)
+		ITM_SendChar((*ptr++));
+	return len;
+}
 /* USER CODE END 0 */
 
 /**
@@ -170,6 +176,9 @@ sprintf(ip_str, "%d.%d.%d.%d", (ipaddr & 0xff), ((ipaddr >> 8) & 0xff), ((ipaddr
 
 // Convertir la máscara de subred en una cadena de caracteres
 sprintf(netmask_str, "%d.%d.%d.%d", (netmask & 0xff), ((netmask >> 8) & 0xff), ((netmask >> 16) & 0xff), ((netmask >> 24) & 0xff));
+
+printf("IP");
+printf("GATEWAY");
 
 
 	  HAL_ADC_Start(&hadc3);
