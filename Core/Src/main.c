@@ -258,7 +258,7 @@ printf("GATEWAY");
 						indexMenu=0;
 						ssd1306_UpdateScreen();
 					}
-          else if (indexMenu==3){
+          else if (indexMenu==4){
 						//option Atras back
 						screen=0;
 						indexMenu=0;
