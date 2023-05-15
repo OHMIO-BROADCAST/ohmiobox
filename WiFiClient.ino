@@ -101,6 +101,8 @@ const char* privateKey = "....................";
 bool NetworkStatus = false;
 bool CloudStatus =false;
 bool SerialStatus = false;
+bool isCheckingSerialStatus = false;
+
 
 WiFiClientSecure net = WiFiClientSecure();
 MQTTClient client = MQTTClient(256);
@@ -251,11 +253,34 @@ void persistentAWS()
 
 void checkSerialStatus()
 {
-  //STM32.println("ohmio");
-  //Serial.println("prueba");
-  if(STM32.available()){
-    String message = STM32.readString();
-    Serial.println(message);
+  if(SerialStatus==false && isCheckingSerialStatus==false){
+      Serial.println("Persistent Serial, sending echo");
+      isCheckingSerialStatus=true;
+      STM32.println("CHECK");  
+  } 
+
+  if(SerialStatus==false && isCheckingSerialStatus==true){
+     Serial.println("Persistent Serial, waiting echo");
+      if(STM32.available()){
+        String messageForCheck = STM32.readString(); 
+        if(messageForCheck=="CHECK"){
+          SerialStatus=true;
+          isCheckingSerialStatus=false;
+        } else{
+          SerialStatus=false;
+        }
+      }
+  }
+   
+}
+
+void checkReveiveSerial()
+{
+  if(SerialStatus==true){
+    if(STM32.available()){
+      String message = STM32.readString();
+      Serial.println(message);
+    }
   }
 }
 
