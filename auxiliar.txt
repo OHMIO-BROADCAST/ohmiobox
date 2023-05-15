@@ -120,7 +120,6 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 void processReceivedData(uint8_t* data) {
     if (*data == '9') {
         HAL_UART_Transmit_IT(&huart7, tx_check, strlen((char*)tx_check));
-        rx_buff[0] = 0;  // Restore the value of rx_buff to 0   
     }
 }
 
