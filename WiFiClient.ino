@@ -12,11 +12,25 @@
 
 
 #include <Arduino.h>
+
+//archivo más importante
 #include "secrets.h"
+
+//Wifi
 #include <WiFiClientSecure.h>
+
+//Cliente iot
 #include <MQTTClient.h>
+
+//para manejar JSON en los mensajes
 #include <ArduinoJson.h>
+
+//comunicación serial
 #include <HardwareSerial.h>
+
+//libreria para manejo del tiempo
+#include <NTPClient.h>
+#include <WiFiUdp.h>
 
 
 // The MQTT topics that this device should publish/subscribe
@@ -32,6 +46,22 @@ String packet ;
 
 const String CONNECTION_CHECK_REQUEST = "CHECK_CONNECTION";
 HardwareSerial STM32(0);
+
+
+//Variables para timezone
+const char* ntpServer = "pool.ntp.org";
+const int timeZone = 0;  // Your time zone offset in hours
+
+WiFiUDP ntpUDP;
+NTPClient timeClient(ntpUDP, ntpServer, timeZone);
+
+int desiredMinutes = 0;  // Desired minutes (0-59)
+int desiredHours = 0;    // Desired hours (0-23)
+
+int desiredIntervalMinutes = 1; // Desired interval in minutes
+int lastPublishedMinute = -1; // Variable to store the last published minute
+int currentMinute = 0;
+
 
 void logo(){
   Heltec.display->clear();
@@ -74,6 +104,7 @@ bool SerialStatus = false;
 
 WiFiClientSecure net = WiFiClientSecure();
 MQTTClient client = MQTTClient(256);
+
 
 void messageHandler(String &topic, String &payload) {
   Serial.println("incoming: " + topic + " - " + payload);
@@ -151,6 +182,16 @@ void setup()
     STM32.begin(115200, SERIAL_8N1, 3, 1);
 
     connectAWS();    
+
+    if(NetworkStatus==true){
+      timeClient.begin();
+      timeClient.update();
+
+      // Set the initial desired minutes and hours
+      currentMinute = timeClient.getMinutes();
+      // Check the schedule once at startup
+      checkForPublishMessage();
+    }
 }
 
 int value = 0;
@@ -245,11 +286,34 @@ void showUI(){
   Heltec.display->display();
 }
 
+void checkForPublishMessage(){
+  if(NetworkStatus==true){
+      timeClient.update();
+      delay(1000); // Wait for 1 second to avoid continuous loop
+      checkSchedule();
+  }
+}
+
+void checkSchedule() {
+
+  currentMinute = timeClient.getMinutes();
+
+  // Check if the current minute is different from the last published minute
+  if (currentMinute != lastPublishedMinute) {
+    lastPublishedMinute = currentMinute;
+
+    // Check if the current minute is a multiple of the desired interval
+    if (currentMinute % desiredIntervalMinutes == 0) {
+      publishMessage(); // Execute your desired function here (e.g., publishMessage to AWS)
+    }
+  }
+}
+
 void loop()
 {  
-
   showUI();
-  publishMessage();
+  checkForPublishMessage();
+  //publishMessage();
   client.loop();
   delay(2000);
 }
