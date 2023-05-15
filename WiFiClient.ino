@@ -277,7 +277,9 @@ void checkSerialStatus()
         }
       }
       if(triesSerial==maxTriesSerial){
+        Serial.println("Connectino serial timeoud tries");
         triesSerial=0;
+        isCheckingSerialStatus=false;
       }else{
         triesSerial++;
       }
