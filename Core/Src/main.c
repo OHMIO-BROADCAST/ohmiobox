@@ -19,7 +19,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "lwip.h"
-#include "stdio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -58,7 +57,10 @@ ADC_HandleTypeDef hadc3;
 
 I2C_HandleTypeDef hi2c2;
 
+UART_HandleTypeDef huart7;
 UART_HandleTypeDef huart3;
+DMA_HandleTypeDef hdma_uart7_rx;
+DMA_HandleTypeDef hdma_uart7_tx;
 
 PCD_HandleTypeDef hpcd_USB_OTG_FS;
 
@@ -70,11 +72,13 @@ PCD_HandleTypeDef hpcd_USB_OTG_FS;
 void SystemClock_Config(void);
 static void MPU_Config(void);
 static void MX_GPIO_Init(void);
-static void MX_USART3_UART_Init(void);
+static void MX_DMA_Init(void);
 static void MX_USB_OTG_FS_PCD_Init(void);
 static void MX_I2C2_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_ADC3_Init(void);
+static void MX_UART7_Init(void);
+static void MX_USART3_UART_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -93,17 +97,24 @@ int _write(int file, char *ptr, int len){
   * @brief  The application entry point.
   * @retval int
   */
-  extern int indexMenu=0;
+
+ //VARIABLES PUBLICAS DE NAVEGACION
+ extern int indexMenu=0;
 extern int screen=0;
+static uint32_t last_arriba_time = 0; // keeps track of the last time "ARRIBA" was displayed
+unsigned int analog_value_keypad; //ENTRADA ANALOGICA KEYPAD
+//VARIABLES PUBLICAS DE RED
 extern struct netif gnetif;
 
+//VARIABLES DE COMUNICACION SERIAL
+uint8_t tx_buff[]="COMANDO 1 \n\r";
+uint8_t tx_buff2[]="COMANDO 2 \n\r";
+uint8_t rx_buff[8];
 
-
-
-
-static uint32_t last_arriba_time = 0; // keeps track of the last time "ARRIBA" was displayed
-unsigned int analog_value_keypad;
-
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
+	HAL_UART_Receive_IT(&huart7, rx_buff, 8);
+	//HAL_UART_Transmit_IT(&huart7, tx_buff, strlen((char*)tx_buff));
+}
 
 int main(void)
 {
@@ -138,12 +149,14 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_USART3_UART_Init();
+  MX_DMA_Init();
   MX_USB_OTG_FS_PCD_Init();
   MX_I2C2_Init();
   MX_ADC1_Init();
   MX_ADC3_Init();
   MX_LWIP_Init();
+  MX_UART7_Init();
+  MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
   ssd1306_Init();
   //INICIALIZAMOS EL SPLASH
@@ -160,10 +173,17 @@ int main(void)
   uint32_t netmask;
    char ip_str[16];
    char netmask_str[16];
+   HAL_UART_Init(&huart7);
+  HAL_UART_Receive_IT(&huart7,rx_buff,8);
 
-  while (1)
+ while (1)
   {
+
     /* USER CODE END WHILE */
+/* 	HAL_UART_Transmit_IT(&huart7, tx_buff, 8
+  );
+	HAL_Delay(5000); */
+
 	  //INICIALIZAMOS EL SPLASH
     ethernetif_input(&gnetif);
     sys_check_timeouts();
@@ -188,7 +208,7 @@ printf("GATEWAY");
 	  }
 
 	  //Displacement vertical
-	   if(analog_value_keypad >= 800 && analog_value_keypad <= 900){
+	   if(analog_value_keypad >= 700 && analog_value_keypad <= 950){
         if(screen==1){
           if (indexMenu==4){
             indexMenu=0;
@@ -197,6 +217,13 @@ printf("GATEWAY");
             indexMenu++;
           }
         }else if(screen==4){
+          if (indexMenu==4){
+            indexMenu=0;
+          }
+          else{
+            indexMenu++;
+          }
+        }else if(screen==6){
           if (indexMenu==4){
             indexMenu=0;
           }
@@ -220,10 +247,9 @@ printf("GATEWAY");
 	   //screen=1 -> DASHBOARD
 	   //screen=2 -> ENERGIA
 	   //screen=3 -> SETTINGS
-	   //screen=4 -> BROADCASt
+	   //screen=4 -> BROADCAST
      //screen=5 -> CLOUD
-
-
+     //screen=6 -> SERIAL
 
 	      if(analog_value_keypad >= 0 && analog_value_keypad <= 100){
 			//Select
@@ -258,7 +284,13 @@ printf("GATEWAY");
 						indexMenu=0;
 						ssd1306_UpdateScreen();
 					}
-          else if (indexMenu==4){
+					else if (indexMenu==3){
+						//option SERIAL
+						screen=6;
+						indexMenu=0;
+						ssd1306_UpdateScreen();
+					}
+					else if (indexMenu==4){
 						//option Atras back
 						screen=0;
 						indexMenu=0;
@@ -307,6 +339,25 @@ printf("GATEWAY");
 					//screen=1;
 				}
         else if (indexMenu==2){
+					//option Atras back
+					screen=1;
+					indexMenu=0;
+					ssd1306_UpdateScreen();
+				}
+      }
+
+       // SERIAL / PRUEBAS DE COMUNICACIÓN
+      if(screen==6){
+        if(indexMenu==1){
+					//screen=1;
+          HAL_UART_Transmit_IT(&huart7, tx_buff, strlen((char*)tx_buff));
+          HAL_Delay(50);
+				} else if(indexMenu==2){
+					//screen=1;
+          HAL_UART_Transmit_IT(&huart7, tx_buff2, strlen((char*)tx_buff2));
+          HAL_Delay(50);
+        }
+        else if (indexMenu==4){
 					//option Atras back
 					screen=1;
 					indexMenu=0;
@@ -527,6 +578,41 @@ static void MX_I2C2_Init(void)
 }
 
 /**
+  * @brief UART7 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_UART7_Init(void)
+{
+
+  /* USER CODE BEGIN UART7_Init 0 */
+
+  /* USER CODE END UART7_Init 0 */
+
+  /* USER CODE BEGIN UART7_Init 1 */
+
+  /* USER CODE END UART7_Init 1 */
+  huart7.Instance = UART7;
+  huart7.Init.BaudRate = 115200;
+  huart7.Init.WordLength = UART_WORDLENGTH_8B;
+  huart7.Init.StopBits = UART_STOPBITS_1;
+  huart7.Init.Parity = UART_PARITY_NONE;
+  huart7.Init.Mode = UART_MODE_TX_RX;
+  huart7.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart7.Init.OverSampling = UART_OVERSAMPLING_16;
+  huart7.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
+  huart7.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+  if (HAL_UART_Init(&huart7) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN UART7_Init 2 */
+
+  /* USER CODE END UART7_Init 2 */
+
+}
+
+/**
   * @brief USART3 Initialization Function
   * @param None
   * @retval None
@@ -593,6 +679,25 @@ static void MX_USB_OTG_FS_PCD_Init(void)
   /* USER CODE BEGIN USB_OTG_FS_Init 2 */
 
   /* USER CODE END USB_OTG_FS_Init 2 */
+
+}
+
+/**
+  * Enable DMA controller clock
+  */
+static void MX_DMA_Init(void)
+{
+
+  /* DMA controller clock enable */
+  __HAL_RCC_DMA1_CLK_ENABLE();
+
+  /* DMA interrupt init */
+  /* DMA1_Stream1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Stream1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Stream1_IRQn);
+  /* DMA1_Stream3_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Stream3_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Stream3_IRQn);
 
 }
 

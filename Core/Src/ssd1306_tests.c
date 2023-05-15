@@ -34,6 +34,11 @@ const unsigned char icon_rf [] = {
 			0x69, 0x2c, 0x2c, 0x68, 0x30, 0x18, 0x10, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
+const unsigned char icon_serial [] = {
+0x00, 0x00, 0x00, 0x00, 0x00, 0x38, 0x00, 0x3c, 0x00, 0x3c, 0x00, 0x70, 0x38, 0xc0, 0x7f, 0x80,
+	0x38, 0xc0, 0x00, 0x70, 0x00, 0x3c, 0x00, 0x3c, 0x00, 0x18, 0x00, 0x00, 0x00, 0x00
+};
+
 const unsigned char Dashboard_4_LORA []  = {
 	0x1f, 0xff, 0xff, 0xff, 0xf8, 0x20, 0x00, 0x00, 0x00, 0x04, 0x40, 0x00, 0x00, 0x00, 0x02, 0x80,
 	0x00, 0x00, 0x00, 0x01, 0x80, 0x00, 0x00, 0x00, 0x01, 0x80, 0x00, 0x00, 0x00, 0x01, 0x80, 0x00,
@@ -490,14 +495,18 @@ void ssd1306_PrintPrincipalMenu(int value, int indexMenu, int screen){
 	    #ifdef SSD1306_INCLUDE_FONT_11x18
 	    ssd1306_SetCursor(2, y);
 	    ssd1306_WriteString("MENU", Font_11x18, White);
+
+	    //SERIAL CONECTION
+		  ssd1306_DrawBitmap(55,y,icon_serial,15,15,White);
+
 	    //INTERNET
-		  ssd1306_DrawBitmap(70,y,icon_rf,15,15,White);
+		  ssd1306_DrawBitmap(75,y,icon_rf,15,15,White);
 
 	    //BATERIA
-		  ssd1306_DrawBitmap(90,y,icon_cloud,15,15,White);
+		  ssd1306_DrawBitmap(95,y,icon_cloud,15,15,White);
 
 	    //SEÑAL GSM
-		  ssd1306_DrawBitmap(110,y,icon_battery_full,15,15,White);
+		  ssd1306_DrawBitmap(115,y,icon_battery_full,15,15,White);
 
 
 
@@ -772,6 +781,80 @@ void ssd1306_PrintRFMenu(int value, int indexMenu, int screen){
 
 	    ssd1306_UpdateScreen();
 }
+
+void ssd1306_PrintSerialMenu(int value, int indexMenu, int screen){
+		 uint8_t y = 0;
+	    char stringDirection[10] = "";
+
+	    ssd1306_Fill(Black);
+
+	    ssd1306_SetCursor(35, y);
+	    ssd1306_WriteString("SERIAL", Font_7x10, White);
+	    y += 10;
+
+
+		ssd1306_SetCursor(2, y);
+			if(indexMenu==0){
+				ssd1306_WriteString("Status: Connected", Font_7x10, Black);
+			}
+			else{
+				ssd1306_WriteString("Status: Disconnected", Font_7x10, White);
+			}
+		y += 10;
+
+
+		ssd1306_SetCursor(2, y);
+		if(indexMenu==1){
+	        ssd1306_WriteString("Command Test 1", Font_7x10, Black);
+		}
+		else{
+	        ssd1306_WriteString("Commando Test 1", Font_7x10, White);
+		}
+		y += 10;
+
+		ssd1306_SetCursor(2, y);
+		if(indexMenu==2){
+	        ssd1306_WriteString("Command Test 2", Font_7x10, Black);
+		}
+		else{
+	        ssd1306_WriteString("Commando Test 2", Font_7x10, White);
+		}
+		y += 10;
+
+
+		ssd1306_SetCursor(2, y);
+		if(indexMenu==3){
+	        ssd1306_WriteString("Current: ", Font_7x10, Black);
+		}
+		else{
+	        ssd1306_WriteString("Current: ", Font_7x10, White);
+		}
+		y += 10;
+
+
+
+		ssd1306_SetCursor(2, y);
+		if(indexMenu==4){
+			ssd1306_WriteString("BACK", Font_7x10, Black);
+		}
+		else{
+			ssd1306_WriteString("BACK", Font_7x10, White);
+		}
+		y += 10;
+
+		 if(value >= 2850 && value <= 2950){
+			strcpy(stringDirection, "DERECHA");
+		}
+		else if(value >= 1850 && value <= 1950){
+			strcpy(stringDirection, "IZQUIERDA");
+		}
+		else {
+			strcpy(stringDirection, "NORMAL");
+		}
+
+	    ssd1306_UpdateScreen();
+}
+
 void ssd1306_PrintCloudMenu(int value, int indexMenu, int screen, char  IPv4, char  Gateway){
 		 uint8_t y = 0;
 	    char stringDirection[10] = "";
@@ -935,6 +1018,9 @@ void ssd1306_DisplayAnalogValue(int value, int indexMenu, int screen, char IPv4,
 	else if (screen==5){
 		   ssd1306_PrintCloudMenu(value, indexMenu, screen, IPv4, Gateway);
 	}
+	else if (screen==6){
+		  ssd1306_PrintSerialMenu(value, indexMenu, screen);
+		}
 	else{
 		   ssd1306_PrintPrincipalMenu(value, indexMenu, screen);
 	}
