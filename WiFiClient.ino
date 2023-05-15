@@ -114,14 +114,14 @@ MQTTClient client = MQTTClient(256);
 
 
 void messageHandler(String &topic, String &payload) {
-  Serial.println("incoming: " + topic + " - " + payload);
+  // Serial.println("incoming: " + topic + " - " + payload);
 }
 
 void connectAWS()
 {
   WiFi.mode(WIFI_STA);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-  Serial.println("Connecting to Wi-Fi");
+  // Serial.println("Connecting to Wi-Fi");
 
   if(WiFi.status() == WL_CONNECTED){
     NetworkStatus=true;
@@ -142,7 +142,7 @@ void connectAWS()
 
   if(client.connected()){
     client.subscribe(AWS_IOT_SUBSCRIBE_TOPIC);
-    Serial.println("AWS IoT Connected!");
+    // Serial.println("AWS IoT Connected!");
     CloudStatus=true;
   }
 
@@ -160,7 +160,7 @@ void publishMessage()
   char jsonBuffer[512];
   serializeJson(doc, jsonBuffer); // print to client
   client.publish(AWS_IOT_PUBLISH_TOPIC, jsonBuffer);
-  Serial.println("Enviando datos de Broadcast");
+  // Serial.println("Enviando datos de Broadcast");
 }
 
 void initializeOLED(){
@@ -183,9 +183,8 @@ void initializeOLED(){
 void setup()
 {
     initializeOLED();
-    Serial.begin(9600);
-     // Inicializa la comunicación UART en el UART0 (Pines 5 y 6) en el ESP32 y (pines PA_6 y PA_7) en el STM32
-    //STM32.begin(9600, SERIAL_8N1, 5, 6);
+    //Serial.begin(9600);
+     // Inicializa la comunicación UART en el UART0 (Pines GPIO3 RX y GPI01 RX que en realidad son los pines 5 y 6) en el ESP32 y (pines PA_6 y PA_7) en el STM32
     STM32.begin(115200, SERIAL_8N1, 3, 1);
 
     connectAWS();    
@@ -222,7 +221,7 @@ void checkNetworkandAWSStatus(){
 
 void persistentWifi()
 {
-  Serial.println("Persistent Wifi");
+  // Serial.println("Persistent Wifi");
   WiFi.mode(WIFI_STA);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   if (WiFi.status() != WL_CONNECTED){
@@ -237,7 +236,7 @@ void persistentWifi()
 
 void persistentAWS()
 {
-  Serial.println("Persistent AWS");
+  // Serial.println("Persistent AWS");
   // Connect to the MQTT broker on the AWS endpoint we defined earlier
   client.begin(AWS_IOT_ENDPOINT, 8883, net);
   // Create a message handler
@@ -247,10 +246,10 @@ void persistentAWS()
     delay(100);
   }
   if(!client.connected()){
-    Serial.println("AWS not connected yet!");
+    // Serial.println("AWS not connected yet!");
     CloudStatus=false;
   }else{
-    Serial.println("AWS connected");
+    // Serial.println("AWS connected");
     CloudStatus=true;
     client.subscribe(AWS_IOT_SUBSCRIBE_TOPIC);
   }
@@ -258,41 +257,39 @@ void persistentAWS()
 
 void checkSerialStatus()
 {
-  if(SerialStatus==false && isCheckingSerialStatus==false && triesSerial==0){
-      Serial.println("Persistent Serial, sending echo");
-      isCheckingSerialStatus=true;
-      STM32.println("CHECK");  
-  } 
+    if (!SerialStatus && !isCheckingSerialStatus && triesSerial == 0) {
+        isCheckingSerialStatus = true;
+        STM32.print("9");
+    }
 
-  if(SerialStatus==false && isCheckingSerialStatus==true){
-     Serial.println("Persistent Serial, waiting echo");
-      if(STM32.available()){
-        String messageForCheck = STM32.readString(); 
-        if(messageForCheck=="CHECK"){
-          SerialStatus=true;
-          isCheckingSerialStatus=false;
-          triesSerial=0;
-        } else{
-          SerialStatus=false;
+    if (!SerialStatus && isCheckingSerialStatus) {
+        if (STM32.available()) {
+            char messageForCheck = STM32.read();
+            if (messageForCheck == '9') {
+                SerialStatus = true;
+                isCheckingSerialStatus = false;
+                triesSerial = 0;
+            } else {
+                SerialStatus = false;
+            }
         }
-      }
-      if(triesSerial==maxTriesSerial){
-        Serial.println("Connectino serial timeoud tries");
-        triesSerial=0;
-        isCheckingSerialStatus=false;
-      }else{
-        triesSerial++;
-      }
-  }
-   
+
+        if (triesSerial == maxTriesSerial) {
+            triesSerial = 0;
+            isCheckingSerialStatus = false;
+        } else {
+            triesSerial++;
+        }
+    }
 }
+
 
 void checkReveiveSerial()
 {
   if(SerialStatus==true){
     if(STM32.available()){
       String message = STM32.readString();
-      Serial.println(message);
+      // Serial.println(message);
     }
   }
 }
