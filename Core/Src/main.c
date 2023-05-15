@@ -33,6 +33,7 @@
 #include "lwip/dhcp.h"
 #include "ethernetif.h"
 #include "string.h"
+#include <stdbool.h>
 
 /* USER CODE END Includes */
 
