@@ -114,14 +114,14 @@ MQTTClient client = MQTTClient(256);
 
 
 void messageHandler(String &topic, String &payload) {
-  // Serial.println("incoming: " + topic + " - " + payload);
+  Serial.println("incoming: " + topic + " - " + payload);
 }
 
 void connectAWS()
 {
   WiFi.mode(WIFI_STA);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-  // Serial.println("Connecting to Wi-Fi");
+  Serial.println("Connecting to Wi-Fi");
 
   if(WiFi.status() == WL_CONNECTED){
     NetworkStatus=true;
@@ -138,11 +138,11 @@ void connectAWS()
   // Create a message handler
   client.onMessage(messageHandler);
 
-  Serial.print("Connecting to AWS IOT");
+  // Serial.print("Connecting to AWS IOT");
 
   if(client.connected()){
     client.subscribe(AWS_IOT_SUBSCRIBE_TOPIC);
-    // Serial.println("AWS IoT Connected!");
+    Serial.println("AWS IoT Connected!");
     CloudStatus=true;
   }
 
@@ -160,7 +160,7 @@ void publishMessage()
   char jsonBuffer[512];
   serializeJson(doc, jsonBuffer); // print to client
   client.publish(AWS_IOT_PUBLISH_TOPIC, jsonBuffer);
-  // Serial.println("Enviando datos de Broadcast");
+  Serial.println("Enviando datos de Broadcast");
 }
 
 void initializeOLED(){
@@ -221,7 +221,7 @@ void checkNetworkandAWSStatus(){
 
 void persistentWifi()
 {
-  // Serial.println("Persistent Wifi");
+  Serial.println("Persistent Wifi");
   WiFi.mode(WIFI_STA);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   if (WiFi.status() != WL_CONNECTED){
@@ -236,20 +236,20 @@ void persistentWifi()
 
 void persistentAWS()
 {
-  // Serial.println("Persistent AWS");
+  Serial.println("Persistent AWS");
   // Connect to the MQTT broker on the AWS endpoint we defined earlier
   client.begin(AWS_IOT_ENDPOINT, 8883, net);
   // Create a message handler
   client.onMessage(messageHandler);
   if (!client.connect(THINGNAME)) {
-    Serial.print(".");
+    // Serial.print(".");
     delay(100);
   }
   if(!client.connected()){
-    // Serial.println("AWS not connected yet!");
+    Serial.println("AWS not connected yet!");
     CloudStatus=false;
   }else{
-    // Serial.println("AWS connected");
+    Serial.println("AWS connected");
     CloudStatus=true;
     client.subscribe(AWS_IOT_SUBSCRIBE_TOPIC);
   }
@@ -289,7 +289,7 @@ void checkReveiveSerial()
   if(SerialStatus==true){
     if(STM32.available()){
       String message = STM32.readString();
-      // Serial.println(message);
+      Serial.println(message);
     }
   }
 }
