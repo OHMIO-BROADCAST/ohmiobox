@@ -45,6 +45,10 @@ String packet ;
 
 
 const String CONNECTION_CHECK_REQUEST = "CHECK_CONNECTION";
+int triesSerial=0;
+const int maxTriesSerial=5;
+
+
 HardwareSerial STM32(0);
 
 
@@ -61,6 +65,7 @@ int desiredHours = 0;    // Desired hours (0-23)
 int desiredIntervalMinutes = 1; // Desired interval in minutes
 int lastPublishedMinute = -1; // Variable to store the last published minute
 int currentMinute = 0;
+
 
 
 void logo(){
@@ -253,7 +258,7 @@ void persistentAWS()
 
 void checkSerialStatus()
 {
-  if(SerialStatus==false && isCheckingSerialStatus==false){
+  if(SerialStatus==false && isCheckingSerialStatus==false && triesSerial==0){
       Serial.println("Persistent Serial, sending echo");
       isCheckingSerialStatus=true;
       STM32.println("CHECK");  
@@ -266,9 +271,15 @@ void checkSerialStatus()
         if(messageForCheck=="CHECK"){
           SerialStatus=true;
           isCheckingSerialStatus=false;
+          triesSerial=0;
         } else{
           SerialStatus=false;
         }
+      }
+      if(triesSerial==maxTriesSerial){
+        triesSerial=0;
+      }else{
+        triesSerial++;
       }
   }
    
