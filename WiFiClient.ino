@@ -16,6 +16,7 @@
 #include <WiFiClientSecure.h>
 #include <MQTTClient.h>
 #include <ArduinoJson.h>
+#include <HardwareSerial.h>
 
 
 // The MQTT topics that this device should publish/subscribe
@@ -28,12 +29,15 @@ String rssi = "RSSI --";
 String packSize = "--";
 String packet ;
 
+
+const String CONNECTION_CHECK_REQUEST = "CHECK_CONNECTION";
+HardwareSerial STM32(0);
+
 void logo(){
   Heltec.display->clear();
   Heltec.display->drawXbm(0,5,logo_width,logo_height,logo_bits);
   Heltec.display->display();
 }
-
 
 void LoRaData(){
   Heltec.display->clear();
@@ -141,13 +145,17 @@ void initializeOLED(){
 void setup()
 {
     initializeOLED();
-    Serial.begin(115200);
+    Serial.begin(9600);
+     // Inicializa la comunicación UART en el UART0 (Pines 5 y 6) en el ESP32 y (pines PA_6 y PA_7) en el STM32
+    //STM32.begin(9600, SERIAL_8N1, 5, 6);
+    STM32.begin(115200, SERIAL_8N1, 3, 1);
+
     connectAWS();    
 }
 
 int value = 0;
 
-void checkStatus(){
+void checkNetworkandAWSStatus(){
   if(WiFi.status() == WL_CONNECTED){
     NetworkStatus=true;
       if(client.connected()){
@@ -162,6 +170,7 @@ void checkStatus(){
     persistentWifi();
   }
 }
+
 
 void persistentWifi()
 {
@@ -199,8 +208,20 @@ void persistentAWS()
   }
 }
 
+void checkSerialStatus()
+{
+  //STM32.println("ohmio");
+  //Serial.println("prueba");
+  if(STM32.available()){
+    String message = STM32.readString();
+    Serial.println(message);
+  }
+}
+
+
 void showUI(){
-  checkStatus();
+  checkNetworkandAWSStatus();
+  checkSerialStatus();
   Heltec.display->clear();
   Heltec.display->setFont(ArialMT_Plain_10);
   Heltec.display->drawString(15, 0, "CURRENT STATUS");
@@ -230,7 +251,6 @@ void loop()
   showUI();
   publishMessage();
   client.loop();
-  delay(5000);
-    
+  delay(2000);
 }
 
