@@ -98,6 +98,7 @@ int _write(int file, char *ptr, int len){
   * @retval int
   */
 
+
  //VARIABLES PUBLICAS DE NAVEGACION
  extern int indexMenu=0;
 extern int screen=0;
@@ -105,6 +106,23 @@ static uint32_t last_arriba_time = 0; // keeps track of the last time "ARRIBA" w
 unsigned int analog_value_keypad; //ENTRADA ANALOGICA KEYPAD
 //VARIABLES PUBLICAS DE RED
 extern struct netif gnetif;
+
+//VARIABLES GLOBALES DE ESTADO PÚBLICAS TODOS LOS DATOS RELEVANTES DE LA OHMIOBOX, empezando por la comunicación serial y luego los de adquisición seteados desde AWS
+extern bool NetworkStatus;
+extern bool CloudStatus;
+extern bool SerialStatus;
+extern bool isCheckingSerialStatus;
+//variables modificadas que se dejan manipular o leer desde los aplicativos web y móvil, estas son las variables de la lógica de negocio
+char currentFrequencyStr[15];
+char currentChannel[15];
+char currentStandard[15];
+char currentMER[15];
+char currentBER[15];
+char currentID[15];
+char currentWallet[15];
+int currentDesireMinutes;
+int currentTimeZone;
+
 
 //VARIABLES DE COMUNICACION SERIAL
 uint8_t tx_check[] = "9";
